@@ -7,6 +7,14 @@ intents.message_content = True
 
 bot = commands.Bot(command_prefix='$', intents=intents)
 
+
+
+@bot.event
+async def on_command_error(ctx, error):
+    print(f"command eooro: {error}")
+    await ctx.send(f"Error: {error}")
+    
+
 @bot.event
 async def on_ready():
     print(f'Zalogowaliśmy się jako {bot.user}')
@@ -64,5 +72,11 @@ async def hello(ctx):
 @bot.command()
 async def heh(ctx, count_heh = 5):
     await ctx.send("he" * count_heh)
+    
+@bot.command()
+async def helpme(ctx):
+    await ctx.send("help,heh,hello,choose,roll")
+    
+# to load, type in "python bot.py"
 
-bot.run("TOKEN")
+bot.run("")
