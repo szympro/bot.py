@@ -1,6 +1,7 @@
 import random
 import discord
 from discord.ext import commands
+import os 
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -8,10 +9,22 @@ intents.message_content = True
 bot = commands.Bot(command_prefix='$', intents=intents)
 
 
+imgs = os.listdir('images')
+print(os.listdir('images'))
+
+
+@bot.command()
+async def mem(ctx):
+    imgs = os.listdir('images')
+    img_name = random.choice(imgs)
+    with open(f'images/{img_name}', 'rb') as f:
+        picture = discord.File(f)
+        await ctx.send(file=picture)
+
 
 @bot.event
 async def on_command_error(ctx, error):
-    print(f"command eooro: {error}")
+    print(f"command error: {error}")
     await ctx.send(f"Error: {error}")
     
 
@@ -72,11 +85,35 @@ async def hello(ctx):
 @bot.command()
 async def heh(ctx, count_heh = 5):
     await ctx.send("he" * count_heh)
+
+@bot.command()
+async def trash(ctx):
+    await ctx.send("niebieski: papier")
+    await ctx.send("zielony: szkło")
+    await ctx.send("żółty: metal i plastik")
+    await ctx.send("czarny lub szary: zmieszane")
+    await ctx.send("brazowy: bioodpady, np.resztki jedzenia")
+
+
+@bot.command()
+async def baterie(ctx):
+    await ctx.send('Zamiast wyrzucić zużyte baterie, znajdź miejsce gdzie możesz je oddać. Baterie mają różne niebezpieczne substancje chemiczne, dlatego nie powinno się ich wyrzucac do zwykłych pojemników na śmieci.')
+
     
 @bot.command()
 async def helpme(ctx):
-    await ctx.send("help,heh,hello,choose,roll")
-    
+    await ctx.send("choose (podaj rzeczy do wybrania,bot wybierze jednom. np. kot pies chomik.)")
+    await ctx.send("helpme (pokaże tą wiadomość)")
+    await ctx.send("heh (wpisz heh i numer, bot wyświetli he tyle razy)")
+    await ctx.send("hello (bot sie ztobom przywita)")
+    await ctx.send("mem (wyświetli mega śmieszny mem)")
+    await ctx.send("baterie (powie co sie robi z bateriami)")
+    await ctx.send("trash (powie co sie wyrzuca do danego kosza)")
+
+
+
+
 # to load, type in "python bot.py"
+
 
 bot.run("")
